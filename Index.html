@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>mapa de ubicacion automatica</title>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Ubicación Automática</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
-        #map {
-            height: 400px;
+        body, html, #map {
+            height: 100%;
+            margin: 0;
+            padding: 0;
         }
     </style>
 </head>
 <body>
-    <h1>Ubicacion automática</h1>
     <div id="map"></div>
 
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -28,7 +31,7 @@
                     maxZoom: 19,
                 }).addTo(map);
 
-                // geocoding to get adsress
+                // geocoding to get address
                 var geocodingUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitud}&lon=${longitud}`;
                 fetch(geocodingUrl)
                     .then(response => response.json())
@@ -36,7 +39,7 @@
                         var address = data.display_name;
                         // popup
                         var popupContent =  "Latitud: " + latitud + "<br>Longitud: " + longitud + "<br>Dirección: " + address;
-                        // User location mark
+                        // User location marker
                         L.marker([latitud, longitud]).addTo(map)
                             .bindPopup(popupContent)
                             .openPopup();
